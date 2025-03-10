@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test thread-count="2" parallel="methods"
+          name="ParallelTest">
+        <parameter name="browser" value="chrome"/>
+        <parameter name="remote" value="false"/>
+        <classes>
+            <class name="TestCase.testArchitect.LoginTest">
+                <methods>
+                    <include name="TC01"/>
+                    <include name="TC02"/>
+                    <include name="TC03"/>
+                    <include name="TC06"/>
+                    <include name="TC07"/>
+                    <include name="TC08"/>
+                    <include name="TC09"/>
+                    <include name="TC10"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
