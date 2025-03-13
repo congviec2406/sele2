@@ -14,16 +14,22 @@ pipeline {
             }
         }
         
-        stage('Build & Run Tests') {
+        stage('Build') {
             steps {
+                // Chạy Maven để build dự án
                 script {
-                    def mvnHome = tool 'Maven'
-                    withEnv(["PATH+MAVEN=${mvnHome}/bin"]) {
-                        sh 'mvn clean test'
-                    }
+                    sh 'mvn clean install'
                 }
             }
         }
+
+        stage('Test') {
+            steps {
+                // Chạy kiểm thử tự động bằng Maven
+                script {
+                    sh 'mvn test'
+                }
+            }
 
         stage('Publish Test Results') {
             steps {
