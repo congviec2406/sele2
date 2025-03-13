@@ -31,10 +31,11 @@ pipeline {
                 }
             }
         }
-        stage('Publish Test Results') {
-            steps {
-                publishTestNGResults testResultsPattern: '**/target/surefire-reports/testng-results.xml'
-            }
-        }
+		post {
+        	always {
+            // Cleanup hay thông báo gửi email nếu cần
+            	echo 'Kiểm thử đã hoàn tất'
+        	}
+    	}
     }
 }
