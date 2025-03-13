@@ -14,11 +14,13 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build & Run Tests') {
             steps {
-                // Chạy Maven để build dự án
                 script {
-                    sh 'mvn clean install'
+                    def mvnHome = tool 'Maven'
+                    withEnv(["PATH+MAVEN=${mvnHome}/bin"]) {
+                        sh 'mvn clean test'
+                    }
                 }
             }
         }
@@ -33,6 +35,11 @@ pipeline {
         }
 
     }
+ 	stage('Publish Test Results') {
+            steps {
+                publishTestNGResults testResultsPattern: '**/target/surefire-reports/testng-results.xml'
+            }
+        }
 
     post {
         always {
