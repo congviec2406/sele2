@@ -31,11 +31,11 @@ pipeline {
                 }
             }
         }
-		post {
+    }
+    post {
         	always {
             // Cleanup hay thông báo gửi email nếu cần
             	echo 'Kiểm thử đã hoàn tất'
         	}
     	}
-    }
 }
