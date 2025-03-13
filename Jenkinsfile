@@ -1,26 +1,24 @@
 pipeline {
     agent any
-
+    
     tools {
-        maven 'Maven 3.9.9'  // Chỉ định Maven phiên bản đã cài đặt trong Jenkins
-        jdk 'JDK 21'         // Chỉ định JDK phiên bản bạn đang sử dụng
+        maven 'apache-maven-3.9.9'  // Chỉ định Maven phiên bản đã cài đặt trong Jenkins
+        jdk 'jdk-21'         // Chỉ định JDK phiên bản bạn đang sử dụng
+
     }
 
     stages {
-        stage('Checkout') {
+        stage('Clone Repository') {
             steps {
-                // Clone mã nguồn từ Git repository
-                git 'https://github.com/congviec2406/sele2.git'
+                git branch: 'main', url: 'https://github.com/congviec2406/sele2.git'
             }
         }
-
-        stage('Build & Run Tests') {
+        
+        stage('Build') {
             steps {
+                // Chạy Maven để build dự án
                 script {
-                    def mvnHome = tool 'Maven'
-                    withEnv(["PATH+MAVEN=${mvnHome}/bin"]) {
-                        sh 'mvn clean test'
-                    }
+                    sh 'mvn clean install'
                 }
             }
         }
@@ -33,18 +31,12 @@ pipeline {
                 }
             }
         }
-
-    }
- 	stage('Publish Test Results') {
-            steps {
-                publishTestNGResults testResultsPattern: '**/target/surefire-reports/testng-results.xml'
-            }
-        }
-
-    post {
-        always {
+		post {
+        	always {
             // Cleanup hay thông báo gửi email nếu cần
-            echo 'Kiểm thử đã hoàn tất'
-        }
+            	echo 'Kiểm thử đã hoàn tất'
+        	}
+    	}
+
     }
 }
