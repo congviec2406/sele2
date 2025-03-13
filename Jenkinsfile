@@ -37,6 +37,5 @@ pipeline {
             	echo 'Kiểm thử đã hoàn tất'
         	}
     	}
-
     }
 }
