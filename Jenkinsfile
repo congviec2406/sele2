@@ -30,7 +30,7 @@ pipeline {
                     sh 'mvn test'
                 }
             }
-
+        }
         stage('Publish Test Results') {
             steps {
                 publishTestNGResults testResultsPattern: '**/target/surefire-reports/testng-results.xml'
